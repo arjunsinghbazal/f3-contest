@@ -87,22 +87,18 @@ btn.style.display="none";
 
 
 
-
 function searchPostOffices() {
-    const filter = document.getElementById('filter');
-const postOffices = document.querySelectorAll('.postoffice');
+const filter = document.getElementById('filter');
+const postOffices = document.querySelector('.postoffice');
 console.log(postOffices);
   const searchTerm = filter.value.toLowerCase();
-  postOffices.forEach(postOffice => {
-    const name = postOffice.querySelector('strong:nth-child(1)').textContent.toLowerCase();
-    const branchType = postOffice.querySelector('strong:nth-child(2)').textContent.toLowerCase();
-    // If the search term matches either the name or branch type, show the post office
-    if (name.includes(searchTerm) || branchType.includes(searchTerm)) {
-      postOffice.style.display = 'block';
+ let name=postOffices.innerText.toLowerCase().trim();
+    if (name.includes(searchTerm)) {
+      postOffices.style.display = 'block';
     } else {
-      postOffice.style.display = 'none';
-    }
-  });
+      postOffices.style.display = 'none';
+    };
+  
 }
 
 
