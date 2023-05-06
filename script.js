@@ -4,7 +4,6 @@ fetch("https://api.ipify.org?format=json")
 document.getElementById("ipadd").innerHTML = data.ip;
 });
 
-//$("#ipadd") jquery liberary without dom manupulation
 
 const apiUrl = "https://ipinfo.io/205.253.36.199?token=5b331c6322c125";
 fetch(apiUrl)
@@ -64,7 +63,10 @@ ${postOffice.Country}<br> </div><br>`;
       ///for storing details in storage
       const postOfficeObj = {
         name: postOffice.Name,
-        branch: postOffice.BranchType
+        branch: postOffice.BranchType,
+        Delivery:postOffice.DeliveryStatus,
+        Division:postOffice.Division,
+        State:postOffice.State
       };
       array.push(postOfficeObj);
     localStorage.setItem("Details",JSON.stringify(array))
@@ -76,30 +78,41 @@ ${postOffice.Country}<br> </div><br>`;
 });
 });
 
-
+////for clicking btn
 let unhide=document.querySelector(".hide");
 let btn=document.getElementById("btn");
 function hide(){
 unhide.style.display="block";
 btn.style.display="none";
 }
-
-
-
-
+////filter function for searching
 function searchPostOffices() {
-const filter = document.getElementById('filter');
-const postOffices = document.querySelector('.postoffice');
-console.log(postOffices);
-  const searchTerm = filter.value.toLowerCase();
- let name=postOffices.innerText.toLowerCase().trim();
-    if (name.includes(searchTerm)) {
-      postOffices.style.display = 'block';
-    } else {
-      postOffices.style.display = 'none';
-    };
-  
+  const filter = document.getElementById('filter');
+  const postOfficeDetails = document.getElementById('postDetails');
+  const storedDetails = JSON.parse(localStorage.getItem('Details'));
+  const searchTerm = filter.value.toLowerCase().trim();
+  let html = "";
+  storedDetails.forEach(postOffice => {
+    const name = postOffice.name.toLowerCase().trim();
+    const branch = postOffice.branch.toLowerCase().trim();
+    const delivery= postOffice.Delivery.toLowerCase().trim();
+    const stat=postOffice.State.toLowerCase().trim();
+    
+    if (name.includes(searchTerm) || branch.includes(searchTerm)) {
+      html += `<div class="postoffice"><strong>Name: </strong>${name.charAt(0).toUpperCase() + name.slice(1)}<br>
+      <strong>Branch Type: </strong>${branch.charAt(0).toUpperCase() + branch.slice(1)}<br>
+      <strong>Delivery: </strong>${delivery.charAt(0).toUpperCase() + delivery.slice(1)}<br>
+      <strong>State: </strong>${stat.charAt(0).toUpperCase() + stat.slice(1)}<br></div><br>`;
+
+    }
+  });
+  if (html === "") {
+    postOfficeDetails.innerHTML = `<div>No post offices found for "${searchTerm}"</div>`;
+  } else {
+    postOfficeDetails.innerHTML = html;
+  }
 }
+
 
 
 
