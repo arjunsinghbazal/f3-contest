@@ -80,8 +80,8 @@
     column-gap:0.5rem;
     row-gap: 30px;
     flex-wrap: wrap;
-    padding: 1rem;
-    border: 2px solid rgb(124, 119, 119);
+    padding: 0.1rem;
+    /* border: 2px solid rgb(124, 119, 119); */
     border-radius: 1%;
 }
 #postDetails > div{
